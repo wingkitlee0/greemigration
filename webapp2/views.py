@@ -12,8 +12,7 @@ from . import app, model
 
 MODELFILE = 'data/clf.joblib'
 
-@app.route('/')
-@app.route("/test", methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def main():
     now = datetime.datetime.now()
     timeString = now.strftime("%Y-%m-%d %H:%M")
@@ -34,6 +33,7 @@ def main():
         'cpucount' : cpuCount,
         'country' : 'HK',
         'category_list' : mymodel.category_list,
+        'center_list' : mymodel.center_list,
         'plot_script': plot_script, 
         'plot_div': plot_div,
     }
@@ -45,6 +45,10 @@ def main():
         category = request.form['myCategory']
         date1 = request.form['date1']
         has_rfe = request.form['myRFE']
+        myCEN = request.form['myCenter']
+        myAPP = request.form['myAppType']
+
+        print([nationality, date1, has_rfe, myCEN, myAPP])
 
         params = {
             'nationality' : nationality,

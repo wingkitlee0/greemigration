@@ -18,6 +18,16 @@ class Model:
             'EB3',
         ]
 
+        self.center_dict = {
+             'National Benefit Center': 'NBC',
+             'California': 'CA',
+             'Nebraska': 'NE',
+             'Texas': 'TX',
+             'Vermont': 'VT',
+             'OTHER': 'OTHER'
+        }
+        self.center_list = [k for k in self.center_dict]
+
         self.columns = ['RFE', 'START2', 'COUNTRY2_India', 'COUNTRY2_Mexico', 'COUNTRY2_ROW',
             'CAT_EB2', 'CAT_EB2-NIW', 'CAT_EB3']
 
@@ -26,7 +36,7 @@ class Model:
         self.load_clf()
 
     def load_clf(self):
-        self.clf = joblib.load(self.modelfile)
+        self.clf = joblib.load(self.modelfile)    
 
     def predict(self, **params):
         nationality = params['nationality']

@@ -2,8 +2,30 @@ import numpy as np
 import datetime
 import pandas as pd
 
+"""
+['APP',
+ 'CAT_EB2',
+ 'CAT_EB2-NIW',
+ 'CAT_EB3',
+ 'CAT_EB4',
+ 'CAT_EB5',
+ 'CEN_NBC',
+ 'CEN_NE',
+ 'CEN_OTHER',
+ 'CEN_TX',
+ 'CEN_VT',
+ 'COC_India',
+ 'COC_Mexico',
+ 'COC_ROW',
+ 'CON',
+ 'START2',
+ 'STARTM1',
+ 'STARTM2',
+ 'STATUS']
+"""
+
 class ModelUtil:
-    PRESENTDATE = datetime.date(2019, 9, 1) # make sure this is the same EVERYWHERE
+    PRESENTDATE = datetime.date(2018, 1, 1) # make sure this is the same EVERYWHERE
     
     def __init__(self, columns):
         self.columns = columns
