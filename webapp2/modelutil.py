@@ -72,7 +72,7 @@ class ModelUtil:
         else:
             return None        
 
-    def convert_onehot(self, country, category, has_RFE, start_date):
+    def convert_onehot(self, country, category, start_date):
         """
         Convert user's input into one-hot vector
         """
@@ -83,7 +83,6 @@ class ModelUtil:
         
         vector = [0] * len(self.columns)
         
-        vector[self.column_dict['RFE']] = 1 if has_RFE else 0
         vector[self.column_dict['START2']] = (self.PRESENTDATE-start_date).days 
         
         if index_country is not None:

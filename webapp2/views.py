@@ -40,26 +40,27 @@ def main():
     if request.method == 'GET':
         return render_template('main.html', **templateData)
     elif request.method == 'POST':
-        #nationality = request.args.getlist('myCountry')
-        nationality = request.form['myCountry']
+        myCountry = request.form['myCountry']
         category = request.form['myCategory']
         date1 = request.form['date1']
-        has_rfe = request.form['myRFE']
         myCEN = request.form['myCenter']
         myAPP = request.form['myAppType']
+        myCON = request.form['myCON']
 
-        print([nationality, date1, has_rfe, myCEN, myAPP])
+        print([myCountry, date1, myCEN, myAPP])
 
         params = {
-            'nationality' : nationality,
-            'category' : category,
-            'date1' : date1,
-            'has_rfe' : has_rfe
+            'myCountry': myCountry,
+            'category': category,
+            'date1': date1,
+            'myCEN': myCEN,
+            'myAPP': myAPP,
+            'myCON': myCON
         }
 
         prediction_date = mymodel.predict(**params)
-        print(request.args)
-        resultText = "You are from {} and applied the GC on {}.".format(nationality, date1)
+        
+        resultText = "You are from {} and applied the GC on {}.".format(myCountry, date1)
         results = {
             'text' : resultText,
             'prediction_date' : prediction_date,
