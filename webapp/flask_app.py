@@ -3,6 +3,9 @@ from flask import render_template, request
 
 import datetime
 import os
+import socket
+
+host = socket.gethostbyname(socket.gethostname())
 
 flask_app = Flask(__name__)
 
@@ -23,6 +26,7 @@ def index():
         'time': timeString,
         'cpucount' : cpuCount,
         'country' : 'HK',
+        'app2_address' : host+':8000/app2',
     #    'category_list' : mymodel.category_list,
     }
     if request.method == 'GET':
