@@ -29,7 +29,7 @@ def main():
 
     templateData = {
         'title': 'Greemigration',
-        'tagline': 'surviving the long line',
+        'tagline': 'surviving the waiting of green card',
         'project_description': 'This web app provides waiting predictions for employment-based applications',
         'time': timeString,
         'cpucount' : cpuCount,
@@ -94,7 +94,9 @@ def main():
         
         plot = figure(plot_width=500, plot_height=300, 
             x_axis_label='Waiting Time [days]',
-            y_axis_label='Cumulated Approval Fraction')
+            y_axis_label='Approval Fraction')
+        plot.xaxis.axis_label_text_font_size = "20pt"
+        plot.yaxis.axis_label_text_font_size = "20pt"
         plot.line(times, 1.0-sur_rate, line_width=5)
         plot.circle(t50, 0.5, legend="median", fill_color="white", size=12)
         plot_script, plot_div = components(plot)
@@ -106,6 +108,7 @@ def main():
         results = {
             'text' : resultText,
             'prediction_date' : prediction_date,
+            't75': t75,
             'input' : inp,
         }
         return render_template('main.html', results=results, **templateData)

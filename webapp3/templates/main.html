@@ -198,12 +198,13 @@
                   </div>
                 </div>
 
-                <!-- END OF COLUMN-->
+                <!-- END OF LEFT COLUMN-->
                 </div>
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     {% if results %}
-                    <h5>Prediction of cumulated approval fraction (i.e., "hazard" rate)</h5>
+                    <h3>Prediction of cumulated approval fraction</h3> 
+                    <h3>(i.e., "hazard" rate)</h3>
                         {{ plot_div|safe }}
                         {{ plot_script|safe }}
                     {% endif %}
@@ -218,9 +219,14 @@
 
     <br>
     {% if results %}
-    <div class="w-75 p-3 mb-2 bg-success text-white" bottom>
-    <!-- <h2>{{ results.text }} </h2> -->
-    <h2>The predicted median waiting time is {{ results.prediction_date }} days.</h2>
+    <div class="row">
+      <div class="col-sm-11">
+        <div class="w-75 p-3 mb-2 bg-success text-white" bottom>
+          <!-- <h2>{{ results.text }} </h2> -->
+          <h2>The predicted median waiting time is {{ results.prediction_date }} days.</h2>
+          <h3>75% of cases should be approved by {{ results.t75 }} days.</h3>
+        </div>
+      </div>
     </div>
     {% endif %}
     
@@ -248,6 +254,7 @@
 <!-- Footer -->
 <footer class="page-footer font-small blue">
 
+  <br></br>
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">
     Kit Lee // Insight Fellow 2019C // Week-3 Demo
