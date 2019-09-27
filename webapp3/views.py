@@ -88,7 +88,7 @@ def main():
         #yy = sur[0].values
         
         times, sur_rate, t25, t50, t75 = sm.predict(**params)
-        prediction_date = t50
+        prediction_days = t50
 
         print("25%, 50%, 75% = {} {} {}".format(t25, t50, t75))
         
@@ -107,8 +107,8 @@ def main():
         resultText = "You have submitted the green card application on {}.".format(myCountry, date1)
         results = {
             'text' : resultText,
-            'prediction_date' : prediction_date,
-            't75': t75,
+            'prediction_date' : "{:4.1f}".format(prediction_days / 30.0),
+            't75': "{:4.1f}".format(t75 / 30.0),
             'input' : inp,
         }
         return render_template('main.html', results=results, **templateData)

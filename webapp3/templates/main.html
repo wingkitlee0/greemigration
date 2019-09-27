@@ -95,7 +95,7 @@
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">App</a></li>
-              <li><a href="#about">About</a></li>
+              <!-- <li><a href="#about">About</a></li> -->
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -174,10 +174,12 @@
                       <div style="clear: both;"></div>
                       <select class="selectpicker" name="myCenter" data-default="Texas">
                         {% for center in center_list %}
+                        {% if center != "National Benefit Center"%}
                         {% if center == "Texas"%}
                         <option selected>{{ center }}</option>
                         {% else %}
                         <option>{{ center }}</option>
+                        {% endif %}
                         {% endif %}
                         {% endfor %}
                       </select>
@@ -223,8 +225,8 @@
       <div class="col-sm-11">
         <div class="w-75 p-3 mb-2 bg-success text-white" bottom>
           <!-- <h2>{{ results.text }} </h2> -->
-          <h2>The predicted median waiting time is {{ results.prediction_date }} days.</h2>
-          <h3>75% of cases should be approved by {{ results.t75 }} days.</h3>
+          <h2>The predicted median waiting time is {{ results.prediction_date }} months.</h2>
+          <h3>75% of cases would be approved by {{ results.t75 }} months.</h3>
         </div>
       </div>
     </div>
