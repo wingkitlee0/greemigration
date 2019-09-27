@@ -24,15 +24,12 @@ def main():
     mymodel = survival_model.Util()
     bm = BasicModel()
     
+    plot_script = ""
+    plot_div = ""
 
-    plot = figure(plot_width=500, plot_height=300, 
-        x_axis_label='Waiting Time [days]',
-        y_axis_label='Number of Cases remaining in line.')
-    plot_script, plot_div = components(plot)
-    
     templateData = {
         'title': 'Greemigration',
-        'tagline': 'surviving the long line.',
+        'tagline': 'surviving the long line',
         'project_description': 'This web app provides waiting predictions for employment-based applications',
         'time': timeString,
         'cpucount' : cpuCount,
@@ -95,14 +92,17 @@ def main():
 
         print("25%, 50%, 75% = {} {} {}".format(t25, t50, t75))
         
-        plot.line(times, sur_rate, line_width=5)
-        plot.circle(t50, 0.5, legend="median", fill_color="white", size=8)
+        plot = figure(plot_width=500, plot_height=300, 
+            x_axis_label='Waiting Time [days]',
+            y_axis_label='Cumulated Approval Fraction')
+        plot.line(times, 1.0-sur_rate, line_width=5)
+        plot.circle(t50, 0.5, legend="median", fill_color="white", size=12)
         plot_script, plot_div = components(plot)
         templateData['plot_script'] = plot_script
         templateData['plot_div'] = plot_div
 
         
-        resultText = "You are from {} and have submitted the green card application on {}.".format(myCountry, date1)
+        resultText = "You have submitted the green card application on {}.".format(myCountry, date1)
         results = {
             'text' : resultText,
             'prediction_date' : prediction_date,

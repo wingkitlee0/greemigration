@@ -68,6 +68,8 @@
   }
 </style>
 
+<script src="https://kit.fontawesome.com/33f00e7b3f.js" crossorigin="anonymous"></script>
+
 </head>
 
 
@@ -103,12 +105,16 @@
     <div class="container">
     <div class="starter-template">
 
+    <div class="row">
+      <div class="col-sm-11">
     <div class="w-75 p-3 mb-2 bg-success text-white" top>
       <h1>{{ title }}</h1>
-      <h3>{{ tagline }}</h3>
+      <h3>{{ tagline }} <i class="far fa-id-card"></i></h3>
       <p>{{ project_description }}</p>
     </div>
-    
+  </div>
+  </div>
+      
     <br>
 
     <div class="row">
@@ -196,9 +202,11 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <p>Number of Cases remaining in line (i.e., survival rate)</p>
+                    {% if results %}
+                    <h5>Prediction of cumulated approval fraction (i.e., "hazard" rate)</h5>
                         {{ plot_div|safe }}
                         {{ plot_script|safe }}
+                    {% endif %}
                 </div>
               </div>
             </div>
@@ -211,17 +219,12 @@
     <br>
     {% if results %}
     <div class="w-75 p-3 mb-2 bg-success text-white" bottom>
-    <h2>{{ results.text }} </h2>
-    <h2>The predicted waiting time is {{ results.prediction_date }} days.</h2>
-    <p>{{ results.input }}</p>
+    <!-- <h2>{{ results.text }} </h2> -->
+    <h2>The predicted median waiting time is {{ results.prediction_date }} days.</h2>
     </div>
     {% endif %}
-    <br>
-    {% for error in errors %}
-    <h4>{{ error }}</h4>
-    {% endfor %}
+    
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-   
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/bootstrap-datepicker.js"></script>
     </div>
@@ -246,7 +249,8 @@
 <footer class="page-footer font-small blue">
 
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">2019C Week-2 Demo
+  <div class="footer-copyright text-center py-3">
+    Kit Lee // Insight Fellow 2019C // Week-3 Demo
     <p>The date and time on the server is: {{ time }}. The CPU has {{ cpucount }} cores.</p>
   </div>
   <!-- Copyright -->
