@@ -8,9 +8,11 @@ import pandas as pd
 import datetime
 import os
 
-from . import app, model
+from . import app, model, survival_model
+from .basicmodel import BasicModel
 
-MODELFILE = 'data/clf.joblib'
+#MODELFILE = 'data/clf.joblib'
+MODELFILE = 'data/cph_sep26_3.cpk'
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -18,11 +20,14 @@ def main():
     timeString = now.strftime("%Y-%m-%d %H:%M")
     cpuCount = os.cpu_count()
 
-    mymodel = model.Model(modelfile=os.path.join(app.static_folder, MODELFILE))
+    #mymodel = model.Model(modelfile=os.path.join(app.static_folder, MODELFILE))
+    mymodel = survival_model.Util()
+    bm = BasicModel()
+    
 
-    plot = figure(plot_width=500, plot_height=300)
-    plot.circle([1, 2], [3, 4])
-    plot.line([1, 2], [3, 4])
+    plot = figure(plot_width=500, plot_height=300, 
+        x_axis_label='Waiting Time [days]',
+        y_axis_label='Number of Cases remaining in line.')
     plot_script, plot_div = components(plot)
     
     templateData = {
@@ -32,8 +37,8 @@ def main():
         'time': timeString,
         'cpucount' : cpuCount,
         'country' : 'HK',
-        'category_list' : mymodel.category_list,
-        'center_list' : mymodel.center_list,
+        'category_list' : bm.category_list,
+        'center_list' : bm.center_list,
         'plot_script': plot_script, 
         'plot_div': plot_div,
     }
@@ -47,22 +52,60 @@ def main():
         myAPP = request.form['myAppType']
         myCON = request.form['myCON']
 
+        # convert to zero or 1
+        myAPP = 1.0 if myAPP == 'Primary' else 0.0
+        myCON = 1.0 if myCON == 'Concurrent' else 0.0
+        if myCountry in bm.country_dict:
+            myCountry = bm.country_dict[myCountry]
+        else:
+            myCountry = 'ROW'
+
+        myCEN = bm.center_dict[myCEN] if myCEN in bm.center_dict else 'OTHER'
+
         print([myCountry, date1, myCEN, myAPP])
+        if date1 == '':
+            print("ERROR!! date is empty")
+            date1 = datetime.date(2015, 1, 1)
+        else:
+            date1 = datetime.datetime.strptime(date1, '%m/%d/%Y').date()
 
         params = {
-            'myCountry': myCountry,
+            'country': myCountry,
             'category': category,
             'date1': date1,
-            'myCEN': myCEN,
-            'myAPP': myAPP,
-            'myCON': myCON
+            'center': myCEN,
+            'app_type': myAPP,
+            'concurrent': myCON
         }
 
-        prediction_date = mymodel.predict(**params)
+        #prediction_date = mymodel.predict(**params)
+        inp = mymodel.convert_onehot(**params)
+
+        sm = survival_model.SurvivalModel(os.path.join(app.static_folder, MODELFILE))
+        sm.load_survival_model()
+        #df = sm.predict(**params)
+        #sur = sm.cph.predict_survival_function(df)
+        #prediction_date = sm.cph.predict_median(df)
+
+        #xx = sur[0].index.values
+        #yy = sur[0].values
         
-        resultText = "You are from {} and applied the GC on {}.".format(myCountry, date1)
+        times, sur_rate, t25, t50, t75 = sm.predict(**params)
+        prediction_date = t50
+
+        print("25%, 50%, 75% = {} {} {}".format(t25, t50, t75))
+        
+        plot.line(times, sur_rate, line_width=5)
+        plot.circle(t50, 0.5, legend="median", fill_color="white", size=8)
+        plot_script, plot_div = components(plot)
+        templateData['plot_script'] = plot_script
+        templateData['plot_div'] = plot_div
+
+        
+        resultText = "You are from {} and have submitted the green card application on {}.".format(myCountry, date1)
         results = {
             'text' : resultText,
             'prediction_date' : prediction_date,
+            'input' : inp,
         }
         return render_template('main.html', results=results, **templateData)
