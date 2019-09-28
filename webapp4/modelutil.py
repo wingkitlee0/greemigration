@@ -1,45 +1,33 @@
 import numpy as np 
 import datetime
 import pandas as pd
-from .basicdata import BasicData
 
-CATEGORIES = ['COC', 'STATUS', 'DT', 'STARTM', 'CAT', 'START2', 'CEN', 'APP', 'YEAR', 'CON']
-
-class ModelUtil3:
-    def __init__(self, columns, presentdate):
+class ModelUtil:
+    PRESENTDATE = datetime.date(2018, 1, 1) # make sure this is the same EVERYWHERE
+    
+    def __init__(self, columns):
         self.columns = columns
-        self.presentdate = presentdate
 
         self.column_dict = { k: i for i, k in enumerate(self.columns)} # { column name: index }
-        self.basic = BasicData()
 
     def cat_mapping(self, cat):
         if cat in [' EB1A', ' EB1B', ' EB1C']:
             return 'EB1'
         else:
             return cat.strip(' ')
-    
+        
     def RFE_mapping(self, rfe):
-        return 1 if rfe == ' yes' else 0
+        if rfe == ' yes':
+            return 1
+        else:
+            return 0
     
     def country_mapping(self, country):
-        return country if country in ['India', 'China', 'Mexico'] else 'ROW'
+        if country in ['India', 'China', 'Mexico']:
+            return country
+        else:
+            return 'ROW'
 
-    def get_center_onehot_column(self, center):
-        """
-        {'CA': 416,
-         'TX': 20701,
-         'NE': 18958,
-         'VT': 427,
-         'NBC': 878,
-         'OTHER': 405})
-        """
-        if center in ['TX', 'NE', 'VT', 'NBC', 'OTHER']:
-            pass
-            
-
-
-        
     def get_country2_onehot_column(self, country):
         """
         get the index of the one-hot column for country
@@ -62,7 +50,7 @@ class ModelUtil3:
         else:
             return None        
 
-    def convert_onehot(self, country, category, has_RFE, start_date):
+    def convert_onehot(self, country, category, start_date):
         """
         Convert user's input into one-hot vector
         """
@@ -73,8 +61,7 @@ class ModelUtil3:
         
         vector = [0] * len(self.columns)
         
-        vector[self.column_dict['RFE']] = 1 if has_RFE else 0
-        vector[self.column_dict['START2']] = (self.presentdate-start_date).days 
+        vector[self.column_dict['START2']] = (self.PRESENTDATE-start_date).days 
         
         if index_country is not None:
             vector[index_country] = 1
