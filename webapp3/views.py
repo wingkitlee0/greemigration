@@ -11,7 +11,6 @@ import os
 from . import app, model, survival_model
 from .basicmodel import BasicModel
 
-#MODELFILE = 'data/clf.joblib'
 MODELFILE = 'data/cph_sep26_3.cpk'
 
 @app.route('/', methods=['GET', 'POST'])
@@ -20,7 +19,6 @@ def main():
     timeString = now.strftime("%Y-%m-%d %H:%M")
     cpuCount = os.cpu_count()
 
-    #mymodel = model.Model(modelfile=os.path.join(app.static_folder, MODELFILE))
     mymodel = survival_model.Util()
     bm = BasicModel()
     
@@ -75,23 +73,15 @@ def main():
             'concurrent': myCON
         }
 
-        #prediction_date = mymodel.predict(**params)
+        # PREDICTIONS FROM MODEL
         inp = mymodel.convert_onehot(**params)
-
         sm = survival_model.SurvivalModel(os.path.join(app.static_folder, MODELFILE))
         sm.load_survival_model()
-        #df = sm.predict(**params)
-        #sur = sm.cph.predict_survival_function(df)
-        #prediction_date = sm.cph.predict_median(df)
-
-        #xx = sur[0].index.values
-        #yy = sur[0].values
-        
         times, sur_rate, t25, t50, t75 = sm.predict(**params)
         prediction_days = t50
-
         print("25%, 50%, 75% = {} {} {}".format(t25, t50, t75))
         
+        # PLOT WITH BOKEH
         plot = figure(plot_width=500, plot_height=300, 
             x_axis_label='Waiting Time [days]',
             y_axis_label='Approval Fraction')
