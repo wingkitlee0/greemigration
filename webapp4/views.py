@@ -2,6 +2,7 @@ from flask import render_template, abort, Response, request
 
 from bokeh.plotting import figure
 from bokeh.embed import components
+from bokeh.models import Range1d
 
 import pandas as pd
 
@@ -84,11 +85,13 @@ def main():
         # PLOT WITH BOKEH
         plot = figure(plot_width=500, plot_height=300, 
             x_axis_label='Waiting Time [days]',
-            y_axis_label='Approval Fraction')
+            y_axis_label='Approval Ratio')
         plot.xaxis.axis_label_text_font_size = "20pt"
         plot.yaxis.axis_label_text_font_size = "20pt"
         plot.line(times, 1.0-sur_rate, line_width=5)
         plot.circle(t50, 0.5, legend="median", fill_color="white", size=12)
+        plot.x_range=Range1d(0, 2000)
+        plot.legend.location = "bottom_right"
         plot_script, plot_div = components(plot)
         templateData['plot_script'] = plot_script
         templateData['plot_div'] = plot_div

@@ -81,6 +81,12 @@
         });
     </script>
 
+    <style>
+      .tooltip{
+       font-size: 2rem;
+      }
+    </style>
+    
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
           <div class="navbar-header">
@@ -134,7 +140,7 @@
                     </script>
                   </div>
                   <div class="col-sm-6">
-                      <label for="category" data-toggle="tooltip" title="Employment-based categories">GC Category</label>
+                      <label for="category" data-toggle="tooltip" title="Employment-based categories">Category</label>
                         <div style="clear: both;"></div>
                         <select class="selectpicker form-control" name="myCategory">
                           {% for category in category_list %}
@@ -159,7 +165,7 @@
                   </div>
 
                   <div class="col-sm-6">
-                      <label for="app_type" data-toggle="tooltip" title="Concurrent means you have submitted the I-140 and I-485 together">Concurrent?</label>
+                      <label for="app_type" data-toggle="tooltip" title="Concurrent means you have submitted the I-140 and I-485 together">Concurrent Application?</label>
                       <div style="clear: both;"></div>
                       <select class="selectpicker" name="myCON" data-default="Concurrent">
                         <option>Concurrent</option>
@@ -205,8 +211,7 @@
 
                 <div class="col-sm-5">
                     {% if results %}
-                    <h3>Prediction of cumulated approval fraction</h3> 
-                    <h3>(i.e., "hazard" rate)</h3>
+                    <h3 data-toggle="tooltip" title="i.e., 'Hazard Rate'">Prediction of Approval Ratio over Time</h3> 
                         {{ plot_div|safe }}
                         {{ plot_script|safe }}
                     {% endif %}
@@ -223,11 +228,15 @@
     {% if results %}
     <div class="row">
       <div class="col-sm-11">
-        <div class="w-75 p-3 mb-2 bg-success text-white" bottom>
+          <div class="alert alert-success" role="alert">
+              <h2>The predicted median waiting time is {{ results.prediction_date }} months.</h2>
+              <h3>75% of cases would be approved by {{ results.t75 }} months.</h3>
+          </div>
+        <!-- <div class="w-75 p-3 mb-2 bg-success text-white" bottom></div>-->
           <!-- <h2>{{ results.text }} </h2> -->
-          <h2>The predicted median waiting time is {{ results.prediction_date }} months.</h2>
-          <h3>75% of cases would be approved by {{ results.t75 }} months.</h3>
-        </div>
+          
+        
+      
       </div>
     </div>
     {% endif %}
