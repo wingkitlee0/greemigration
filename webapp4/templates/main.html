@@ -6,19 +6,19 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="favicon.ico">
     <link rel="canonical" href="https://getbootstrap.com/docs/3.3/examples/starter-template/">
 
     <title>{{ title }}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../static/css/starter-template.css" rel="stylesheet">
+    <link href="./static/css/starter-template.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -114,9 +114,9 @@
     <div class="row">
       <div class="col-sm-11">
     <div class="w-75 p-3 mb-2 bg-success text-white" top>
-      <h1>{{ title }}</h1>
-      <h3>{{ tagline }} <i class="far fa-id-card"></i></h3>
-      <p>{{ project_description }}</p>
+          <h1>{{ title }}</h1>
+          <h3>{{ tagline }} <i class="far fa-id-card"></i></h3>
+          <p>{{ project_description }}</p>
     </div>
   </div>
   </div>
@@ -127,6 +127,7 @@
     
     <form role="form" method='POST' action="{{ url_for('main') }}">
         <fieldset>
+            <div class="col-sm-11">
             <div class="form-group">
               <legend>Applicant Information</legend>
               <div class="col-sm-6">
@@ -202,7 +203,7 @@
 
                 <div class="row  form-group"><!--width is set by this div -->
                   <div class="col-sm-12">
-                      <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                      <button class="btn btn-lg btn-primary btn-block" type="submit">Predict!</button>
                   </div>
                 </div>
 
@@ -218,8 +219,10 @@
                 </div>
               </div>
             </div>
+          </div>
         </fieldset>
     </form>
+
 
   </div>
   <!-- END ROW-->
@@ -268,7 +271,7 @@
   <br></br>
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">
-    Kit Lee // Insight Fellow 2019C // Week-3 Demo
+    <p>Kit Lee // Insight Fellow 2019C // Demo</p>
     <p>The date and time on the server is: {{ time }}. The CPU has {{ cpucount }} cores.</p>
   </div>
   <!-- Copyright -->
