@@ -23,6 +23,7 @@ def main():
     plot_script = ""
     plot_div = ""
 
+    # default values
     templateData = {
         'title': 'Greemigration',
         'tagline': 'surviving the waiting of green card',
@@ -30,6 +31,8 @@ def main():
         'time': timeString,
         'cpucount' : cpuCount,
         'country' : 'HK',
+        'center' : 'Texas',
+        'category' : 'EB1',
         'category_list' : bm.category_list,
         'center_list' : bm.center_list,
         'plot_script': plot_script, 
@@ -38,39 +41,13 @@ def main():
     if request.method == 'GET':
         return render_template('main.html', **templateData)
     elif request.method == 'POST':
+        
         # myCountry = request.form['myCountry']
         # category = request.form['myCategory']
         # date1 = request.form['date1']
         # myCEN = request.form['myCenter']
         # myAPP = request.form['myAppType']
         # myCON = request.form['myCON']
-
-        # # convert to zero or 1
-        # myAPP = 1.0 if myAPP == 'Primary' else 0.0
-        # myCON = 1.0 if myCON == 'Concurrent' else 0.0
-        # if myCountry in bm.country_dict:
-        #     myCountry = bm.country_dict[myCountry]
-        # else:
-        #     myCountry = 'ROW'
-
-        # myCEN = bm.center_dict[myCEN] if myCEN in bm.center_dict else 'OTHER'
-
-        # print([myCountry, date1, myCEN, myAPP])
-        # if date1 == '':
-        #     print("ERROR!! date is empty")
-        #     date1 = datetime.date(2015, 1, 1)
-        # else:
-        #     date1 = datetime.datetime.strptime(date1, '%m/%d/%Y').date()
-
-        # # this is the dictionary that stores the responses from the web form
-        # params = {
-        #     'country': myCountry,
-        #     'category': category,
-        #     'date1': date1,
-        #     'center': myCEN,
-        #     'app_type': myAPP,
-        #     'concurrent': myCON
-        # }
 
         # get params
         myview = ViewsUtil()
@@ -86,7 +63,10 @@ def main():
         
         myplot = BokehPlot()
         plot_script, plot_div = myplot.make_bokeh_plot(times, sur_rate, t50)
-        # updating the template data
+        # update the template data and re-populate the data from the web form
+        templateData['country'] = request.form['myCountry']
+        templateData['center'] = request.form['myCenter']
+
         templateData['plot_script'] = plot_script
         templateData['plot_div'] = plot_div
 
