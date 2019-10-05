@@ -35,20 +35,14 @@ def main():
         'category' : 'EB1',
         'category_list' : bm.category_list,
         'center_list' : bm.center_list,
+        'apptype': 'Primary',
+        'concurrency': 'Concurrent',
         'plot_script': plot_script, 
         'plot_div': plot_div,
     }
     if request.method == 'GET':
         return render_template('main.html', **templateData)
     elif request.method == 'POST':
-        
-        # myCountry = request.form['myCountry']
-        # category = request.form['myCategory']
-        # date1 = request.form['date1']
-        # myCEN = request.form['myCenter']
-        # myAPP = request.form['myAppType']
-        # myCON = request.form['myCON']
-
         # get params
         myview = ViewsUtil()
         params = myview.get_parameters_from_web_form(request)
@@ -66,6 +60,9 @@ def main():
         # update the template data and re-populate the data from the web form
         templateData['country'] = request.form['myCountry']
         templateData['center'] = request.form['myCenter']
+        templateData['category'] = request.form['myCategory']
+        templateData['apptype'] = request.form['myAppType']
+        templateData['concurrency'] = request.form['myCON']
 
         templateData['plot_script'] = plot_script
         templateData['plot_div'] = plot_div

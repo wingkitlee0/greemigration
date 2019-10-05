@@ -143,9 +143,13 @@
                   <div class="col-sm-6">
                       <label for="category" data-toggle="tooltip" title="Employment-based categories">Category</label>
                         <div style="clear: both;"></div>
-                        <select class="selectpicker form-control" name="myCategory">
-                          {% for category in category_list %}
-                          <option>{{ category }}</option>
+                        <select class="selectpicker form-control" name="myCategory" data-default={{ category }}>
+                          {% for x in category_list %}
+                          {% if x == category %}
+                          <option selected>{{ x }}</option>
+                          {% else %}
+                          <option>{{ x }}</option>
+                          {% endif %}
                           {% endfor %}
                         </select>
                   </div>
@@ -168,9 +172,14 @@
                   <div class="col-sm-6">
                       <label for="app_type" data-toggle="tooltip" title="Concurrent means you have submitted the I-140 and I-485 together">Concurrent Application?</label>
                       <div style="clear: both;"></div>
-                      <select class="selectpicker" name="myCON" data-default="Concurrent">
-                        <option>Concurrent</option>
-                        <option>Non-concurrent</option>
+                      <select class="selectpicker" name="myCON" data-default={{ concurrency }}>
+                        {% if concurrency == 'Concurrent' %}
+                          <option selected>Concurrent</option>
+                          <option>Non-concurrent</option>
+                        {% else %}
+                          <option>Concurrent</option>
+                          <option selected>Non-concurrent</option>
+                        {% endif %}
                       </select>
                   </div>
                 </div>
@@ -180,12 +189,12 @@
                       <label for="center" data-toggle="tooltip" title="Processing Center">Center</label>
                       <div style="clear: both;"></div>
                       <select class="selectpicker" name="myCenter" data-default={{ center }}>
-                        {% for center_ in center_list %}
-                        {% if center_ != "National Benefit Center"%}
-                        {% if center_ == "Texas" %}
-                        <option selected>{{ center_ }}</option>
+                        {% for x in center_list %}
+                        {% if x != "National Benefit Center"%}
+                        {% if x == center %}
+                        <option selected>{{ x }}</option>
                         {% else %}
-                        <option>{{ center_ }}</option>
+                        <option>{{ x }}</option>
                         {% endif %}
                         {% endif %}
                         {% endfor %}
@@ -194,9 +203,14 @@
                     <div class="col-sm-6">
                       <label for="app_type" data-toggle="tooltip" title="Applicant Type">Applicant Type</label>
                       <div style="clear: both;"></div>
-                      <select class="selectpicker" name="myAppType" data-default="Primary">
-                        <option>Primary</option>
-                        <option>Dependent</option>
+                      <select class="selectpicker" name="myAppType" data-default={{ apptype }}>
+                        {% if apptype == 'Primary' %}
+                          <option selected>Primary</option>
+                          <option>Dependent</option>
+                        {% else %}
+                          <option>Primary</option>
+                          <option selected>Dependent</option>
+                        {% endif %}
                       </select>
                     </div>
                 </div>
@@ -245,8 +259,8 @@
     {% endif %}
     
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-    <script src="static/js/bootstrap-datepicker.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap-datepicker.js"></script>
     </div>
     </div>
 
