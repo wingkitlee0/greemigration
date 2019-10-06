@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-    name='GCPredict',
+    name='gcpredict',
     version='0.1dev',
     packages=['gcpredict',],
     license='Creative Commons Attribution-Noncommercial-Share Alike license',
