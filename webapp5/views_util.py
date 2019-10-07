@@ -16,7 +16,7 @@ class ViewsUtil:
 
         myCountry = request.form['myCountry']
         category = request.form['myCategory']
-        date1 = request.form['date1']
+        date1 = request.form['myDate']
         myCEN = request.form['myCenter']
         myAPP = request.form['myAppType']
         myCON = request.form['myCON']

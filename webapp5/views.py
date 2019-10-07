@@ -30,6 +30,7 @@ def main():
         'project_description': 'This web app provides waiting predictions for employment-based applications',
         'time': timeString,
         'cpucount' : cpuCount,
+        'default_date' : '01/01/2015',
         'country' : 'HK',
         'center' : 'Texas',
         'category' : 'EB1',
@@ -63,6 +64,7 @@ def main():
         templateData['category'] = request.form['myCategory']
         templateData['apptype'] = request.form['myAppType']
         templateData['concurrency'] = request.form['myCON']
+        templateData['default_date'] = request.form['myDate']
 
         templateData['plot_script'] = plot_script
         templateData['plot_div'] = plot_div
