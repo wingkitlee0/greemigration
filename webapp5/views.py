@@ -26,7 +26,7 @@ def main():
     # default values
     templateData = {
         'title': 'Greemigration',
-        'tagline': 'surviving the waiting of green card',
+        'tagline': 'surviving the waiting line of Green Card Applications',
         'project_description': 'This web app provides waiting predictions for employment-based applications',
         'time': timeString,
         'cpucount' : cpuCount,
@@ -70,7 +70,7 @@ def main():
         templateData['plot_div'] = plot_div
 
         # the result text is shown only after pressing the Predict! buttion
-        resultText = "You have submitted the green card application on {}.".format(params['country'], params['date1'])
+        resultText = "You have submitted the green card application on {}.".format(params['date1'])
         results = {
             'text' : resultText,
             'prediction_date' : "{:4.1f}".format(prediction_days / 30.0),

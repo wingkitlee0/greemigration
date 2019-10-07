@@ -226,7 +226,8 @@
 
                 <div class="col-sm-5">
                     {% if results %}
-                    <h3 data-toggle="tooltip" title="i.e., 'Hazard Rate'">Prediction of Approval Ratio over Time</h3> 
+                    <h3 data-toggle="tooltip" title="i.e., 'Hazard Rate'">Prediction:</h3> 
+                    <h4>The blue curve shows the fraction of similar cases that would have gotten approval.</h4>
                         {{ plot_div|safe }}
                         {{ plot_script|safe }}
                     {% endif %}
