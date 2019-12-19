@@ -150,9 +150,20 @@ class SurvivalModel(BasicModel):
         idx2 = np.searchsorted(1-sur_rate, 0.5)  # median
         idx3 = np.searchsorted(1-sur_rate, 0.75) # 25% survival
 
-        t25 = times[idx1]
-        t50 = times[idx2]
-        t75 = times[idx3]
+        if idx1 < len(times):
+            t25 = times[idx1]
+        else:
+            t25 = -1.0
+        
+        if idx2 < len(times):
+            t50 = times[idx2]
+        else:
+            t50 = -1.0
+        
+        if idx3 < len(times):
+            t75 = times[idx3]
+        else:
+            t75 = -1.0
 
         return times, sur_rate, t25, t50, t75
 

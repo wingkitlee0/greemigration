@@ -248,13 +248,10 @@
       <div class="col-sm-11">
           <div class="alert alert-success" role="alert">
               <h2>The predicted median waiting time is {{ results.prediction_date }} months.</h2>
+              {% if results.t75 != 'NaN' %}
               <h3>75% of cases would be approved by {{ results.t75 }} months.</h3>
+              {% endif %}
           </div>
-        <!-- <div class="w-75 p-3 mb-2 bg-success text-white" bottom></div>-->
-          <!-- <h2>{{ results.text }} </h2> -->
-          
-        
-      
       </div>
     </div>
     {% endif %}
