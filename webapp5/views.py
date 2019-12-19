@@ -71,10 +71,12 @@ def main():
 
         # the result text is shown only after pressing the Predict! buttion
         resultText = "You have submitted the green card application on {}.".format(params['date1'])
+
+        t75_str = "{:4.1f}".format(t75 / 30.0) if t75 > 0 else "NaN"
         results = {
             'text' : resultText,
             'prediction_date' : "{:4.1f}".format(prediction_days / 30.0),
-            't75': "{:4.1f}".format(t75 / 30.0),
+            't75': t75_str,
             'input' : inp,
         }
 
